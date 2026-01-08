@@ -25,7 +25,9 @@ jobs:
 
       - name: Run Tests
         run: |
+          npm run build
           npm test | tee test-output.txt
+          npm run coverage
           output=$(<test-output.txt)
           cleaned_output=$(echo "$output" | sed 's/\x1b\[[0-9;]*m//g')
           cleaned_output=$(echo "$cleaned_output" | sed 's/\x1b\[0m$//')
@@ -34,3 +36,10 @@ jobs:
           else
             exit 1
           fi
+
+      - name: Report coverage
+        continue-on-error: true
+        uses: coverallsapp/github-action@v2.3.4
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          file: coverage/lcov.info
