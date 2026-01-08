@@ -1,5 +1,5 @@
 import { Assert, Fact } from "@rbxts/runit";
-import { hello } from "@rbxts/my-package";
+import { hello } from "../src/index";
 
 class MyPackageTest {
   @Fact
